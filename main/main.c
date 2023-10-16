@@ -13,9 +13,9 @@
 #include "driver/gpio.h"
 #include <stdio.h>
 
-#define ledB 13
-#define ledG 12
 #define ledR 27
+#define ledY 12
+#define ledG 13
 
 int8_t led_r_state = 0;
 int8_t led_g_state = 0;
@@ -42,11 +42,11 @@ static esp_err_t root_get_handler(httpd_req_t *req)
     }
     if (strcmp(req->uri, "/?led-g") == 0)
     {
-        toggle_led(ledG);
+        toggle_led(ledY);
     }
     if (strcmp(req->uri, "/?led-b") == 0)
     {
-        toggle_led(ledB);
+        toggle_led(ledG);
     }
 
     char *viewHtmlUpdated;
@@ -125,7 +125,7 @@ static void connect_handler(void *arg, esp_event_base_t event_base,
 esp_err_t init_led(void)
 {
     gpio_config_t pGPIOConfig;
-    pGPIOConfig.pin_bit_mask = (1ULL << ledR) | (1ULL << ledG) | (1ULL << ledB);
+    pGPIOConfig.pin_bit_mask = (1ULL << ledR) | (1ULL << ledY) | (1ULL << ledG);
     pGPIOConfig.mode = GPIO_MODE_DEF_OUTPUT;
     pGPIOConfig.pull_up_en = GPIO_PULLUP_DISABLE;
     pGPIOConfig.pull_down_en = GPIO_PULLDOWN_DISABLE;
@@ -146,19 +146,19 @@ esp_err_t toggle_led(int led)
         led_r_state = !led_r_state;
         state = led_r_state;
         break;
-    case ledG:
+    case ledY:
         led_g_state = !led_g_state;
         state = led_g_state;
         break;
-    case ledB:
+    case ledG:
         led_b_state = !led_b_state;
         state = led_b_state;
         break;
 
     default:
         gpio_set_level(ledR, 0);
+        gpio_set_level(ledY, 0);
         gpio_set_level(ledG, 0);
-        gpio_set_level(ledB, 0);
         led_r_state = 0;
         led_g_state = 0;
         led_b_state = 0;
