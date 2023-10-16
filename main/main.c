@@ -13,13 +13,13 @@
 #include "driver/gpio.h"
 #include <stdio.h>
 
-#define ledR 27
-#define ledY 12
-#define ledG 13
+#define ledR 27 //Red
+#define ledY 12 //Yellow
+#define ledG 13 //Green
 
 int8_t led_r_state = 0;
+int8_t led_y_state = 0;
 int8_t led_g_state = 0;
-int8_t led_b_state = 0;
 
 static const char *TAG = "main";
 
@@ -40,17 +40,17 @@ static esp_err_t root_get_handler(httpd_req_t *req)
     {
         toggle_led(ledR);
     }
-    if (strcmp(req->uri, "/?led-g") == 0)
+    if (strcmp(req->uri, "/?led-y") == 0)
     {
         toggle_led(ledY);
     }
-    if (strcmp(req->uri, "/?led-b") == 0)
+    if (strcmp(req->uri, "/?led-g") == 0)
     {
         toggle_led(ledG);
     }
 
     char *viewHtmlUpdated;
-    int formattedStrResult = asprintf(&viewHtmlUpdated, viewHtml, led_r_state ? "ON" : "OFF", led_g_state ? "ON" : "OFF", led_b_state ? "ON" : "OFF");
+    int formattedStrResult = asprintf(&viewHtmlUpdated, viewHtml, led_r_state ? "ON" : "OFF", led_y_state ? "ON" : "OFF", led_g_state ? "ON" : "OFF");
 
     httpd_resp_set_type(req, "text/html");
 
@@ -147,12 +147,12 @@ esp_err_t toggle_led(int led)
         state = led_r_state;
         break;
     case ledY:
-        led_g_state = !led_g_state;
-        state = led_g_state;
+        led_y_state = !led_y_state;
+        state = led_y_state;
         break;
     case ledG:
-        led_b_state = !led_b_state;
-        state = led_b_state;
+        led_g_state = !led_g_state;
+        state = led_g_state;
         break;
 
     default:
@@ -160,8 +160,8 @@ esp_err_t toggle_led(int led)
         gpio_set_level(ledY, 0);
         gpio_set_level(ledG, 0);
         led_r_state = 0;
+        led_y_state = 0;
         led_g_state = 0;
-        led_b_state = 0;
         break;
     }
     gpio_set_level(led, state);
