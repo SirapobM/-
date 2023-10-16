@@ -1,0 +1,60 @@
+<html>
+<head>
+    <style>
+        table {
+            margin: auto;
+        }
+        td {
+            padding: 10px;
+            font-size: 20px;
+        }
+        .Button {
+
+            background-color: #4CAF50;
+            border: 2px solid #4CAF50;;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1><center>ESP32 Web Server</center></h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p><a href="/?led-r"><button class="ButtonR Button">Red</button></a></p>
+                </td>
+                <td>
+                    <strong> %s </strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><a href="/?led-g"><button class="ButtonG Button">Yellow</button></a></p>
+                </td>
+                <td>
+                    <strong> %s </strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><a href="/?led-b"><button class="ButtonB Button">Green</button></a></p>
+                </td>
+                <td>
+                    <strong> %s </strong>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
